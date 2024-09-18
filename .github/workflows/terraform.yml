@@ -10,7 +10,7 @@ on:
 
 jobs:
   terraform:
-    name: Terraform Apply
+    name: Terraform Plan and Apply
     runs-on: ubuntu-latest
 
     steps:
@@ -34,22 +34,18 @@ jobs:
       # Step: Verificar formatação do Terraform
       - name: Terraform Format Check
         run: terraform fmt -check
-        continue-on-error: false  # Faila o build se o formato estiver errado
+        continue-on-error: false  # Falha o build se o formato estiver errado
 
       # Inicializar o Terraform
       - name: Terraform Init
         run: terraform init
 
-      # Verificar o plano do Terraform
+      # Executar o Terraform Plan se for um Pull Request
       - name: Terraform Plan
+        if: github.event_name == 'pull_request'
         run: terraform plan
 
-      # Aplicar as mudanças do Terraform
+      # Executar o Terraform Apply apenas se for um push na branch main
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
-
-      # Destruir a infraestrutura se necessário (quando PR é fechado)
-      - name: Terraform Destroy
-        if: github.event_name == 'pull_request' && github.event.action == 'closed'
-        run: terraform destroy -auto-approve
