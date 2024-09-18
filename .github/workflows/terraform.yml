@@ -13,43 +13,43 @@ jobs:
     name: Terraform Apply
     runs-on: ubuntu-latest
 
-    permissions:
-      id-token: write
-      contents: read
-      actions: read
-
     steps:
       # Checkout o código do repositório
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Configura o AWS CLI usando credenciais do IAM OIDC no GitHub
+      # Configurar variáveis de ambiente com secrets da AWS
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<IAM_ROLE_NAME>
-          aws-region: us-east-1  # Ajuste para a sua região da AWS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      # Instala o Terraform CLI
+      # Instalar o Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.6  # Ou outra versão necessária
+          terraform_version: 1.4.6  # Versão ajustável conforme necessário
 
-      # Inicializa o Terraform
+      # Step: Verificar formatação do Terraform
+      - name: Terraform Format Check
+        run: terraform fmt -check
+        continue-on-error: false  # Faila o build se o formato estiver errado
+
+      # Inicializar o Terraform
       - name: Terraform Init
         run: terraform init
 
-      # Verifica o plano do Terraform
+      # Verificar o plano do Terraform
       - name: Terraform Plan
         run: terraform plan
 
-      # Aplica as mudanças do Terraform
+      # Aplicar as mudanças do Terraform
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
 
-      # Destroi a infraestrutura se necessário
+      # Destruir a infraestrutura se necessário (quando PR é fechado)
       - name: Terraform Destroy
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
         run: terraform destroy -auto-approve
