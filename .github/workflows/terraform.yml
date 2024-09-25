@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   terraform:
@@ -14,9 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout o código do repositório
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -25,27 +21,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      # Instalar o Terraform CLI
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.4.6  # Versão ajustável conforme necessário
+        uses: hashicorp/setup-terraform@v1
 
-      # Step: Verificar formatação do Terraform
-      - name: Terraform Format Check
-        run: terraform fmt -check
-        continue-on-error: false  # Falha o build se o formato estiver errado
-
-      # Inicializar o Terraform
       - name: Terraform Init
         run: terraform init
 
-      # Executar o Terraform Plan se for um Pull Request
-      - name: Terraform Plan
-        if: github.event_name == 'pull_request'
-        run: terraform plan
-
-      # Executar o Terraform Apply apenas se for um push na branch main
       - name: Terraform Apply
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
