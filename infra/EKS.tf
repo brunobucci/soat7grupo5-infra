@@ -18,4 +18,17 @@ module "eks" {
       instance_types = ["t2.micro"]
     }
   }
+
+  iam_role_additional_policies = [
+    "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+    "arn:aws:iam::aws:policy/AmazonEKSServicePolicy",
+    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
+  ]
+
+  map_roles = [{
+    rolearn  = module.eks.worker_iam_role_arn
+    username = "eks-admin"
+    groups   = ["system:masters"]
+  }]
+
 } 
