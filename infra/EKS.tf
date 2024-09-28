@@ -19,5 +19,5 @@ module "eks" {
     }
   }
 
-  role_arn = aws_iam_role.eks_role.arn  # Aqui é onde vinculamos o role IAM ao cluster
+  iam_role_name = aws_iam_role.eks_role.name  # Aqui vinculamos o role ao cluster
 }
