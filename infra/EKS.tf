@@ -13,9 +13,9 @@ module "eks" {
     fiap-tech-challenge = {
       min_size     = 1
       max_size     = 10
-      desired_size = 2
+      desired_size = 3
       vpc_security_group_ids = [aws_security_group.ssh_cluster.id]
-      instance_types = ["t2.micro"]
+      instance_types = ["t2.medium"]
     }
   }
 
