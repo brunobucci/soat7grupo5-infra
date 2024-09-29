@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: api-container
-        image: brunobucci/soat7grupo5
+        image: brunobucci/soat7grupo5-app
         ports:
         - containerPort: 8081
         envFrom:
