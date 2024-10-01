@@ -18,6 +18,4 @@ module "eks" {
       instance_types = ["t2.medium"]
     }
   }
-
-  iam_role_name = aws_iam_role.eks_role.name  # Aqui vinculamos o role ao cluster
 }
