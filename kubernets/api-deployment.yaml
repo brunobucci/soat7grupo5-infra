@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: api-container
-        image: 390403866524.dkr.ecr.us-east-1.amazonaws.com/soat7grupo5:latest
+        image: brunobucci/soat7grupo5-app
         ports:
         - containerPort: 8081
         envFrom:
