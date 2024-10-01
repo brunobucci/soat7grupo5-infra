@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: api-configmap
 data:
-  SPRING_DATASOURCE_URL: "soat7grupo5-mysql.chou0ge6orve.us-east-1.rds.amazonaws.com"
+  SPRING_DATASOURCE_URL: "jdbc:mysql://soat7grupo5-mysql.chou0ge6orve.us-east-1.rds.amazonaws.com:3306/soat7grupo5"
   SPRING_DATASOURCE_USERNAME: "soat7grupo5"
   SPRING_DATASOURCE_PASSWORD: "soat7grupo5"
