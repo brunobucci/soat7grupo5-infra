@@ -2,9 +2,9 @@
 
 ### Repositório: Infra com Terraform | Kubernetes | AWS (EKS)
 
-Link do vídeo detalhando Infra pode ser visto <a href="https://www.youtube.com/watch?v=NSo" target="_blank">aqui</a> <br>
+Link do vídeo detalhando Infra pode ser visto <a href="https://www.youtube.com/watch?v=YplkjITVdOM" target="_blank">aqui</a> <br>
 Link do vídeo detalhando Lambda pode ser visto <a href="https://www.youtube.com/watch?v=bhS" target="_blank">aqui</a> <br>
-Link do vídeo detalhando DB pode ser visto <a href="https://youtu.be/zwMH" target="_blank">aqui</a> <br>
+Link do vídeo detalhando DB pode ser visto <a href="https://www.youtube.com/watch?v=zoPAKaxvm4M" target="_blank">aqui</a> <br>
 
 ### Outros repositórios da fase:
 <b>App com CI/CD:</b> https://github.com/brunobucci/soat7grupo5-app<br>
